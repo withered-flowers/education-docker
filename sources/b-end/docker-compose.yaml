@@ -1,0 +1,46 @@
+# Deklarasi versi dari Compose yang digunakan (3.1)
+version: '3.1'
+
+# Deklarasi services apa saja yang akan dibuat
+# services = container
+services:
+  # Service yang pertama
+  # Ingat, pada konfigurasi .yaml, INDENTASI sangat penting DAN berbahaya !
+  # Jika salah, maka akan error
+  
+  # Kita berikan nama service pertama yang akan digunakan adalah "first-server"
+  first-server:
+    # Di sini kita akan membuat image berdasarkan Dockerfile yang ada di dalam folder 1st-server
+    build: ./services/1st-server
+    # Kita akan membuat port 10000 yang ada pada container di-"salurkan" ke port 10000 di host
+    ports:
+      - 10000:10000
+
+  # Kita berikan nama service kedua yang akan digunakan adalah "second-server"
+  second-server:
+    # Di sini kita akan membuat image berdasarkan Dockerfile yang ada di dalam folder 2nd-server
+    build: ./services/2nd-server
+    # Kita akan membuat port 10001 yang ada pada container di-"salurkan" ke port 10001 di host
+    ports:
+      - 10001:10001
+
+  # Kita berikan nama orchestrator utama yang akan digunakan adalah "orchestrator"
+  orchestrator:
+    # Di sini kita akan membuat image berdasarkan Dockerfile yang ada di dalam folder gateway
+    build: ./gateway
+    # Kita akan membuat port 9999 yang ada pada container di-"salurkan" ke port 9999 di host
+    ports:
+      - 9999:9999
+    # Ingat bahwa orchestrator ini baru bisa dijalankan ketika first-server dan second-server nyala 
+    # (ketergantungan / dependency)
+    depends_on:
+      - first-server
+      - second-server
+    # Masih ingat pada aplikasi "gateway" yang dibuat
+    # Membutuhkan 2 environment variable:
+    # - FIRST_SERVER_URL
+    # - SECOND_SERVER_URL
+    # Kita akan memberikan nilai pada environment variable tersebut
+    environment:
+      - FIRST_SERVER_URL=http://first-server:10000
+      - SECOND_SERVER_URL=http://second-server:10001
