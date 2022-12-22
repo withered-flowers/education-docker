@@ -4,10 +4,38 @@ version: '3.1'
 # Deklarasi services apa saja yang akan dibuat
 # services = container
 services:
-  # Service yang pertama
   # Ingat, pada konfigurasi .yaml, INDENTASI sangat penting DAN berbahaya !
   # Jika salah, maka akan error
-  
+
+  # Service yang ke 0a (Database Postgres)
+  db-pg:
+    # Di sini kita akan menggunakan image standard dari dockerhub 
+    # yang bernama "postgres" dan tag bernama "15.1-alpine"
+    image: postgres:15.1-alpine
+    # Berdasarkan Dockerhub, image ini membutuhkan sebuah environment variable
+    # Dengan nama POSTGRES_PASSWORD
+    environment:
+      POSTGRES_DB: database_production
+      POSTGRES_PASSWORD: postgres
+    # Kita akan membuat port 5432 yang ada pada container di-"salurkan" ke port 5432 di host
+    ports:
+      - 5432:5432
+
+  # Service yang ke 0b (Database MongoDB)
+  db-mongo:
+    # Di sini kita akan menggunakan image standard dari dockerhub 
+    # yang bernama "mongo" dan tag bernama "6.0.3"
+    image: mongo:6.0.3
+    # Berdasarkan Dockerhub, image ini membutuhkan tiga buah environment variable
+    # Dengan nama MONGO_INITDB_ROOT_USERNAME, MONGO_INITDB_ROOT_PASSWORD, dan MONGO_INITDB_DATABASE
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodb
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+      MONGO_INITDB_DATABASE: production
+    ports:
+      - 27017:27017
+
+  # Service yang pertama  
   # Kita berikan nama service pertama yang akan digunakan adalah "first-server"
   first-server:
     # Di sini kita akan membuat image berdasarkan Dockerfile yang ada di dalam folder 1st-server
@@ -15,6 +43,15 @@ services:
     # Kita akan membuat port 10000 yang ada pada container di-"salurkan" ke port 10000 di host
     ports:
       - 10000:10000
+    # Masih ingat pada aplikasi "1st-server" yang dibuat
+    # Membutuhkan 1 environment variable:
+    # - NODE_ENV yang diset menjadi "production" (sequelize akan menggunakan database production)
+    # - DATABASE_URL
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@db-pg:5432/database_production
+    depends_on:
+      - db-pg
 
   # Kita berikan nama service kedua yang akan digunakan adalah "second-server"
   second-server:
@@ -23,6 +60,15 @@ services:
     # Kita akan membuat port 10001 yang ada pada container di-"salurkan" ke port 10001 di host
     ports:
       - 10001:10001
+    # Masih ingat pada aplikasi "2nd-server" yang dibuat
+    # Membutuhkan 2 environment variable:
+    # - DATABASE_URL
+    # - DATABASE_NAME
+    environment:
+      - DATABASE_URL=mongodb://mongodb:mongodb@db-mongo:27017
+      - DATABASE_NAME=production
+    depends_on:
+      - db-mongo
 
   # Kita berikan nama orchestrator utama yang akan digunakan adalah "orchestrator"
   orchestrator:
@@ -42,5 +88,5 @@ services:
     # - SECOND_SERVER_URL
     # Kita akan memberikan nilai pada environment variable tersebut
     environment:
-      - FIRST_SERVER_URL=http://first-server:10000
-      - SECOND_SERVER_URL=http://second-server:10001
+      - FIRST_SERVER_URL=http://first-server:10000/api
+      - SECOND_SERVER_URL=http://second-server:10001/api

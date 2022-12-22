@@ -12,12 +12,12 @@ COPY package.json .
 # Dan mungkin kita bisa memanfaatkan "cache" dari Docker
 # Untuk menghemat layer / space yang digunakan
 # --production = hanya install "dependencies" saja (skip "devDependencies")
-# CMD ["npm", "install", "--production"]
+# RUN npm install --production
 
 # Apabila menggunakan pnpm perintah di atas diabaikan dan gunakan perintah di bawah ini saja
-CMD ["corepack", "enable"]
-CMD ["corepack", "prepare", "pnpm@latest", "--activate"]
-CMD ["pnpm", "install", "--production"]
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
+RUN pnpm install --production
 
 # ASUMSI:
 # Pada production kita tidak melakukan migration / seeding
