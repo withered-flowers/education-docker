@@ -14,10 +14,10 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     loremIpsums: async () => {
-      const response = await fetch(`${SECOND_SERVER_URL}/api`);
-      const loremIpsums = await response.json();
+      const response = await fetch(`${SECOND_SERVER_URL}`);
+      const responseJson = await response.json();
 
-      return loremIpsums;
+      return responseJson.data;
     },
   },
 };

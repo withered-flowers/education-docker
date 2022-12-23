@@ -18,10 +18,10 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     tasks: async () => {
-      const response = await fetch(`${FIRST_SERVER_URL}/api`);
-      const tasks = await response.json();
+      const response = await fetch(`${FIRST_SERVER_URL}`);
+      const responseJson = await response.json();
 
-      return tasks;
+      return responseJson.data;
     },
   },
 };
