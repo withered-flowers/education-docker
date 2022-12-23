@@ -1,0 +1,1 @@
+mongoimport --db production --collection LoremIpsum -u mongodb -p mongodb --authenticationDatabase=admin --file migrations.json --jsonArray

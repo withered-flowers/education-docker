@@ -23,9 +23,8 @@ services:
 
   # Service yang ke 0b (Database MongoDB)
   db-mongo:
-    # Di sini kita akan menggunakan image standard dari dockerhub 
-    # yang bernama "mongo" dan tag bernama "6.0.3"
-    image: mongo:6.0.3
+    # Di sini kita akan membuat image berdasarkan Dockerfile yang ada di dalam folder db-mongo
+    build: ./database/db-mongo
     # Berdasarkan Dockerhub, image ini membutuhkan tiga buah environment variable
     # Dengan nama MONGO_INITDB_ROOT_USERNAME, MONGO_INITDB_ROOT_PASSWORD, dan MONGO_INITDB_DATABASE
     environment:
@@ -77,6 +76,27 @@ services:
     # Kita akan membuat port 9999 yang ada pada container di-"salurkan" ke port 9999 di host
     ports:
       - 9999:9999
+    # Ingat bahwa orchestrator ini baru bisa dijalankan ketika first-server dan second-server nyala 
+    # (ketergantungan / dependency)
+    depends_on:
+      - first-server
+      - second-server
+    # Masih ingat pada aplikasi "gateway" yang dibuat
+    # Membutuhkan 2 environment variable:
+    # - FIRST_SERVER_URL
+    # - SECOND_SERVER_URL
+    # Kita akan memberikan nilai pada environment variable tersebut
+    environment:
+      - FIRST_SERVER_URL=http://first-server:10000/api
+      - SECOND_SERVER_URL=http://second-server:10001/api
+
+  # Kita berikan nama orchestrator utama (versi graphql) dengan nama "orchestrator-graphql"
+  orchestrator-graphql:
+    # Di sini kita akan membuat image berdasarkan Dockerfile yang ada di dalam folder gateway-graphql
+    build: ./gateway-graphql
+    # Kita akan membuat port 4000 yang ada pada container di-"salurkan" ke port 4000 di host
+    ports:
+      - 4000:4000
     # Ingat bahwa orchestrator ini baru bisa dijalankan ketika first-server dan second-server nyala 
     # (ketergantungan / dependency)
     depends_on:
