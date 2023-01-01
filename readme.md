@@ -12,7 +12,7 @@
 - Let's Demo
 - References
 
-### Why Docker
+## Why Docker
 
 Pada suatu kala di dunia deployment, programmer sering kali memiliki permasalahan ini:
 
@@ -24,7 +24,7 @@ Apakah bila bertemu masalah seperti ini artinya kita harus deploy di komputer pr
 
 Nah hal inilah yang ingin kita selesaikan dengan menggunakan Docker !
 
-### What is Docker
+## What is Docker
 
 Docker adalah sebuah program yang bisa kita gunakan untuk membuat sebuah lingkungan yang kita sebut "container". Container ini mirip dengan sebuah kotak kecil yang berisi semua yang kita perlukan untuk menjalankan sebuah program komputer.
 
@@ -32,24 +32,36 @@ Dengan container, kita bisa membuat sebuah lingkungan yang terisolasi di dalam k
 
 Jadi, secara sederhana, docker bisa kita gunakan untuk membuat sebuah "kotak" yang berisi semua yang kita butuhkan untuk menjalankan sebuah program komputer, sehingga program tersebut bisa berjalan dengan lancar di komputer apapun.
 
-### Special File in Docker
+Namun sebelum kita bisa membuat container, terlebih dahulu kita membutuhkan sebuah image / cetakan / •blueprint\* dari aplikasi yang ingin dijalankan dalam "kotak" tersebut. Image ini bisa kita buat sendiri, atau kita bisa mendownloadnya dari internet.
+
+Jadi dalam Docker (yang kita ketahui sekarang, ada 3 istilah yang **serupa namun tak sama**):
+
+- `Image` - Cetakan Aplikasi
+- `Container` - Kotak di mana Aplikasi berjalan
+- `Docker` - Tools untuk membuat dan memanage container
+
+## Special File in Docker
 
 Dalam Docker ini sendiri akan ada banyak file dan perintah yang akan dipelajari, namun untuk saat ini kita akan fokus pada 2 file yang sangat penting dalam Docker, yaitu:
 
 - Dockerfile, yang digunakan untuk membuat sebuah image
 - .dockerignore, yang digunakan untuk mengabaikan file yang tidak perlu di include dalam image
 
-#### Dockerfile
+### Dockerfile
 
-#### .dockerignore
+Dockerfile adalah sebuah file yang berisi perintah-perintah yang akan digunakan untuk membuat sebuah image. Perintah-perintah ini akan dijalankan secara berurutan, dan akan menghasilkan sebuah image yang bisa kita gunakan untuk membuat sebuah container.
 
-#### Build a Docker Image
+### .dockerignore
 
-#### Docker Compose
+.dockerignore adalah sebuah file yang berisi daftar file dan folder yang tidak perlu di include dalam image. Anggap saja ini adalah file `.gitignore`, namun untuk Docker.
 
-### Let's Demo
+## Build a Docker Image
 
-### References
+## Docker Compose
+
+## Let's Demo
+
+## References
 
 - https://docs.docker.com/get-started/
 - https://docs.docker.com/get-started/02_our_app/
