@@ -1,15 +1,15 @@
-# Education Docker
+# Education Docker (WIP)
 
 ## Table of Contents
 
 - [Why Docker](#why-docker)
 - [What is Docker](#what-is-docker)
 - [Special File in Docker](#special-file-in-docker)
-  - Dockerfile
-  - .dockerignore
-- Build a Docker Image
-- Docker Compose
-- Let's Demo
+  - [Dockerfile](#dockerfile)
+  - [.dockerignore](#dockerignore)
+- [Run a Docker Container](#run-a-docker-container)
+- [Build a Docker Image](#build-a-docker-image)
+- [Docker Compose](#docker-compose)
 - References
 
 ## Why Docker
@@ -55,11 +55,49 @@ Dockerfile adalah sebuah file yang berisi perintah-perintah yang akan digunakan 
 
 .dockerignore adalah sebuah file yang berisi daftar file dan folder yang tidak perlu di include dalam image. Anggap saja ini adalah file `.gitignore`, namun untuk Docker.
 
+## Run a Docker Container
+
+Sudah, yuk, cukup dengan teori, mari sekarang kita coba ber-"main" dengan Docker !
+
+Mari kita install Docker terlebih dahulu dengan mengikuti langkah yang ada di sini yah - https://docs.docker.com/get-docker/
+
+Kemudian setelah itu mari kita coba untuk menjalankan aplikasi favorit kita yang bernama .... `Hello World`
+
+Karena kita belum memiliki aplikasi apapun, maka kita akan "meminjam" untuk image yang sudah dibuat oleh komunitas dari sebuah tempat yang bernama `Docker Hub` yah - https://hub.docker.com/
+
+Untuk mengunduh image Hello World yang ada di Docker Hub (https://hub.docker.com/_/hello-world) dan menjalankannya pada Docker local kita, kita bisa menggunakan perintah berikut:
+
+```bash
+docker run hello-world
+```
+
+Dengan menggunakan perintah ini akan muncul tulisan hello world dalam Docker, kemudian aplikasi akan langsung selesai (berhenti).
+
+Tapi cari ini ada _caveat_ nya loh !
+
+Ketika kita melihat ada proses aplikasi apa saja yang berjalan dengan menggunakan `docker ps -a`, kita akan melihat bahwa container yang dibuat berdasarkan image hello-world tersebut tidak lagi berjalan, namun masih ada !
+
+Untuk bisa menghapus image tersebut maka kita bisa menggunakan perintah `docker rm <container_name>`.
+
+Supaya hal ini tidak terjadi lagi untuk aplikasi sekali jalan seperti ini, kita bisa menggunakan perintah `--rm` untuk menghapus container tersebut setelah aplikasi selesai berjalan.
+
+```bash
+docker run --rm hello-world
+```
+
+Perintah yang sudah dipelajari:
+
+- `docker run <image_name>`
+- `docker ps -a`
+- `docker rm <container_name>`
+
 ## Build a Docker Image
 
-## Docker Compose
+Sudah, mari skip bagian teorinya dan langsung masuk ke bagian prakteknya yah !
 
-## Let's Demo
+Untuk bisa membuat
+
+## Docker Compose
 
 ## References
 
