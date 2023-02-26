@@ -95,9 +95,28 @@ Perintah yang sudah dipelajari:
 
 Sudah, mari skip bagian teorinya dan langsung masuk ke bagian prakteknya yah !
 
-Untuk bisa membuat
+Untuk bisa membuat dan menjalankan aplikasi starter pack yang dibuat, langkahnya adalah sebagai berikut:
+
+- Generate dan entry database production
+- Membuat Dockerfile
 
 ## Docker Compose
+
+Mulai susah karena Dockefile-nya cukup banyak? Selamat, kita sudah butuh suatu "manajer" dari Docker yang ada.
+
+Istilah kerennya disebut dengan suatu "orchestrator" untuk si Docker ini.
+
+Umumnya ada 2 Orchestrator untuk Container yang menggunakan Docker:
+
+- Docker Compose
+- Kubernetes
+
+Perbedaan mendasarnya adalah:
+
+- Docker Compose fokus pada Container yang menggunakan Docker, Kubernetes seluruh Container yang disupport
+- Docker Compose memiliki fitur yang lebih terbatas, namun lebih mudah, ketimbang menggunakan Kubernetes
+
+Pada Pembelajaran di sini kita menggunakan `Docker Compose` yah.
 
 ## References
 
